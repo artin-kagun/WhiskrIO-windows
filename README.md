@@ -69,6 +69,41 @@ Gemini API を使用した macOS 用の音声入力アプリ。猫のひげ（Wh
 - 効果音（録音開始/停止）
 - 日英UI切り替え対応
 
+
+## Windows 版（新規）
+
+このリポジトリには `WhiskrIO.Windows/` として Windows 向け実装（.NET 8 / WinForms トレイアプリ）を追加しています。
+
+### 実装済み
+- タスクトレイ常駐（開始/停止・設定ファイル編集・終了）
+- グローバルホットキー（デフォルト: Ctrl + Shift + R）
+- マイク録音（44.1kHz WAV / NAudio）
+- Gemini API で音声文字起こし
+- アクティブウィンドウへのテキスト自動入力
+- APIキーの DPAPI 保護保存（`%AppData%/WhiskrIO/settings.json`）
+
+### Windows ビルド手順
+
+```powershell
+cd WhiskrIO.Windows
+dotnet restore
+dotnet build -c Release
+```
+
+### 設定ファイル
+初回起動時に `%AppData%/WhiskrIO/settings.json` が生成されます。
+
+```json
+{
+  "GeminiApiKey": "<DPAPIで暗号化された値>",
+  "GeminiModel": "gemini-2.5-flash-lite",
+  "HotkeyModifiers": 6,
+  "HotkeyVirtualKey": 82
+}
+```
+
+> `HotkeyModifiers: 6` は `Ctrl(2) + Shift(4)` です。
+
 ## システム要件
 
 - macOS 13.0 以降
